@@ -62,3 +62,5 @@ export const GENRE_TOP = {
 export const CSS_NAME_LENGTH = 6;
 export const DAY_TOP_EL_NUM = 10;
 export const GENRE_TOP_EL_NUM = 5;
+
+export const BANNER_WIDTH = 720;

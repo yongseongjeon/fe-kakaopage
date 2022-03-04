@@ -7,11 +7,10 @@
   overflow-x: hidden;
   margin: 0 auto;
   display: flex;
-  transition: 1s;
 }
 
 .caraousel__banners {
-  transition: 1s;
+  transition: 0.5s;
   display: flex;
 }
 

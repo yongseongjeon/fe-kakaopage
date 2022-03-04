@@ -6,7 +6,7 @@ import { tabMovie } from "../components/tab/global/movie.js";
 import { tabWebnovel } from "../components/tab/global/webNovel.js";
 import { tabWebtoonHome } from "../components/tab/global/webtoon.js";
 import { createTabWebtoonHome } from "../components/tab/sub/webtoonHome.js";
-import { CATEGORIES, SNB } from "./constants.js";
+import { BANNER_WIDTH, CATEGORIES, SNB } from "./constants.js";
 import { addEventDay } from "./event.js";
 import { setSelectedSNB } from "./render.js";
 import { $, getTransformX } from "./utils.js";
@@ -149,20 +149,39 @@ export function dayHandler(e) {
   }
 }
 
+let carouselProgress = 0;
+const lastBanner = 4;
+const firstBanner = 0;
+
 export function carouselHandler(e) {
   const target = e.target.dataset.button;
   const bannersEl = $(".caraousel__banners");
+  const curX = getTransformX(bannersEl);
+  const bannerTransform = bannersEl.style.transform;
+  const lastBannerPosition = BANNER_WIDTH * lastBanner;
+  const isFirstProgress = carouselProgress === firstBanner;
+  const isLastProgress = carouselProgress === lastBanner;
+  const isClikedPrev = target === "prev";
+  const isClikedNext = target === "next";
 
-  if (target === "prev") {
-    console.log("prev");
+  if (isClikedPrev) {
+    if (isFirstProgress) {
+      bannerTransform = `translateX(-${lastBannerPosition}px)`;
+      carouselProgress = lastBanner;
+      return;
+    }
+    bannerTransform = `translateX(${curX + BANNER_WIDTH}px)`;
+    carouselProgress -= 1;
     return;
   }
-  if (target === "next") {
-    const transformX = getTransformX(bannersEl);
-    console.log(transformX);
-
-    bannersEl.style.transform = "translateX(-720px)";
-    console.log("next");
+  if (isClikedNext) {
+    if (isLastProgress) {
+      bannerTransform = "";
+      carouselProgress = firstBanner;
+      return;
+    }
+    bannerTransform = `translateX(${curX - BANNER_WIDTH}px)`;
+    carouselProgress += 1;
     return;
   }
 }
